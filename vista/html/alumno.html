@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>Proyecto Integrador</title>
+        <link href="../css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
+        <!-- Bootstrap -->
+        <link href="../../vista/css/bootstrap.min.css" rel="stylesheet">
+        
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#" id="navUsuario">Sesi&oacute;n iniciada: <font color="red"><span id="logedUser"></span></font></a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <form class="navbar-form navbar-right" action="../../cerrarSesion.php" method="POST">
+                        <button type="submit" class="btn btn-success" id="cerrarSesion">Cerrar sesi&oacute;n</button>
+                    </form>
+                </div><!--/.navbar-collapse -->
+            </div>
+        </nav> 
+        <!-- Main jumbotron for a primary marketing message or call to action -->
+        <div class="jumbotron">
+            <div class="container">
+                <h1>SISTEMA INTEGRADOR</h1>
+                <p>Administrar Alumno</p>
+            </div>
+        </div>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../../admin.html">Inicio</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Administrar <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="alumno.html">Alumno</a></li>
+                                <li><a href="profesor.html">Profesor</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        <!-- Button trigger modal -->
+        <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <form class="navbar-form navbar-left" role="search">
+                                <button class="btn btn-primary btn-lg btn-toolbar right" id="agregar" value="agregar">
+                                    <span class="glyphicon glyphicon-plus-sign left"> </span> Agregar
+                                </button>
+                                <button class="btn btn-primary btn-lg" id="reporteAlumno" value="reporte">
+                                    <span class="glyphicon glyphicon-print left"> </span> Reporte
+                                </button>
+                            </form>
+                        </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                </nav>
+            </div>
+            <div class="col-lg-2"></div><!-- Cierra el navbar que tiene el buscar y las opciones agregar imprimir -->
+        </div>        
+        <!--comienzo DataTable de Alumnos -->
+        <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+               <!-- PRUEBAS DE DATATABLES-->
+                <table id="example" class="display" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>Selecci&oacute;n</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Legajo</th>
+                        <th>Calle</th>
+                        <th>N&uacute;mero</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="exampleBody">
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Selecci&oacute;n</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Legajo</th>
+                        <th>Calle</th>
+                        <th>N&uacute;mero</th>
+                        <th>Acciones</th>
+                    </tr>
+                </tfoot>
+            </table> 
+            <!--FIN PRUEBAS DATATABLE-->    
+            </div>
+            <div class="col-lg-2"></div>
+        </div>
+        
+        
+        
+        
+        
+        <!-- modal alumno-->
+        <div class="modal fade" id="modalAlumno" tabindex="-1" role="dialog" aria-labelledby="modalAlumno" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="formAlumno" class="form-horizontal"
+                          data-bv-message="Este valor No es válido"
+                          data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+                          data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                          data-bv-feedbackicons-validating="glyphicon glyphicon-refresh"
+                          data-bv-submitbuttons='button[type="submit"]'
+                          data-bv-trigger="focus blur"
+                          data-bv-live="enabled">
+                        <div class="modal-header">
+                            
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="tituloModal">Nuevo Alumno</h4>
+                            
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <input class="form-control" type="hidden" id="id" name="id">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class='col-lg-2'>Nombre</label>
+                                <div class='col-lg-10'>
+                                    <input class="form-control" type="text" id="nombre" name="nombre"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="Debes completar el Nombre">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class='col-lg-2'>Apellido</label>
+                                <div class='col-lg-10'>
+                                    <input class="form-control" type="text" id="apellido" name="apellido"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="Debes completar el Apellido">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class='col-lg-2'>Legajo</label>
+                                <div class='col-lg-10'>
+                                    <input class="form-control" type="text" id="legajo" name="legajo"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="Debes completar el Legajo"
+                                           
+                                           data-bv-stringlength="true"
+                                           data-bv-stringlength-min="5"
+                                           data-bv-stringlength-max="5"
+                                           data-bv-stringlength-message="El Legajo debe tener 5 caracteres">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class='col-lg-2'>Calle</label>
+                                <div class='col-lg-10'>
+                                    <input class="form-control" type="text" id="calle" name="calle"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="Debes completar la Calle">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class='col-lg-2'>Numero</label>
+                                <div class='col-lg-10'>
+                                    <input class="form-control" type="text" id="numero" name="numero"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="Debes completar el Numero">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class='col-lg-2'></label>
+                                <div class='col-lg-10'>
+                                    <input class="form-control" type="hidden" id="accion" name="accion" value="guardar">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class='col-lg-2'></label>
+                                <div class='col-lg-10'>
+                                    <input class="form-control" type="hidden" id="nombreFormulario" name="nombreFormulario" value="Alumno">
+                                </div>
+                            </div>
+                            
+                            
+                            
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="cancelar" name="cancelar" class="btn btn-default">Close</button>
+                            <button type="button" id="reporDetalle" name="accion" class="btn btn-primary" value="">Reporte</button>
+                            <button type="button" id="guardar" name="accion" class="btn btn-primary" value=""></button>
+                            <input type="hidden" id="nombreFormulario" value="Alumno">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="../js/jquery/jquery-1.11.1.min.js" type="text/javascript"></script>
+        <script src="../js/bootstrap/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../js/bootstrap/bootstrapValidator.min.js" type="text/javascript"></script>
+        <script src="../js/jquery.dataTables.js" type="text/javascript"></script>
+        <script src="../js/funcionesAlumno.js" type="text/javascript"></script>
+    </body>
+</html>

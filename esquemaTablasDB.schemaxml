@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="utf8" collation="utf8_general_ci">pracprof</database>
+</source>
+<canvas zoom="75">
+<tables>
+<table name="adelanto" view="colnames">
+<left>0</left>
+<top>0</top>
+<width>106</width>
+<height>173</height>
+<sql_create_table>CREATE TABLE `adelanto` (
+  `id_adelanto` int(11) NOT NULL AUTO_INCREMENT,
+  `detalle_adelanto` varchar(50) NOT NULL,
+  `fecha_adelanto` datetime NOT NULL,
+  `monto_adelanto` decimal(10,2) NOT NULL,
+  `id_caso` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `fch_creacion` datetime NOT NULL,
+  `fch_modificacion` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `fch_baja` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id_adelanto`),
+  KEY `ADELANTO_CASO` (`id_caso`),
+  KEY `ADELANTO_USUARIO` (`id_usuario`),
+  CONSTRAINT `ADELANTO_USUARIO` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
+  CONSTRAINT `ADELANTO_CASO` FOREIGN KEY (`id_caso`) REFERENCES `caso` (`id_caso`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="art" view="colnames">
+<left>128</left>
+<top>4</top>
+<width>106</width>
+<height>161</height>
+<sql_create_table>CREATE TABLE `art` (
+  `id_art` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre_art` varchar(50) NOT NULL,
+  `direccion_art` varchar(100) DEFAULT NULL,
+  `detalle_art` varchar(50) DEFAULT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `fch_creacion` datetime NOT NULL,
+  `fch_modificacion` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `fch_baja` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id_art`),
+  KEY `ART_USUARIO` (`id_usuario`),
+  CONSTRAINT `ART_USUARIO` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="asistente" view="colnames">
+<left>255</left>
+<top>8</top>
+<width>111</width>
+<height>148</height>
+<sql_create_table>CREATE TABLE `asistente` (
+  `id_asistente` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre_asistente` varchar(50) NOT NULL,
+  `apellido_asistente` varchar(50) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `fch_creacion` datetime NOT NULL,
+  `fch_modificacion` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `fch_baja` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id_asistente`),
+  KEY `ASISTENTE_USUARIO` (`id_usuario`),
+  CONSTRAINT `ASISTENTE_USUARIO` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="caso" view="colnames">
+<left>206</left>
+<top>226</top>
+<width>124</width>
+<height>233</height>
+<sql_create_table>CREATE TABLE `caso` (
+  `id_caso` int(11) NOT NULL AUTO_INCREMENT,
+  `fechaAccidente_caso` datetime DEFAULT NULL,
+  `salario_caso` decimal(10,0) NOT NULL,
+  `fotocopiaDNI_caso` bit(1) NOT NULL,
+  `firmaPoder_caso` bit(1) NOT NULL,
+  `firmaPacto_caso` bit(1) NOT NULL,
+  `estado_caso` varchar(50) DEFAULT NULL,
+  `etapa_caso` varchar(50) DEFAULT NULL,
+  `descripcion_caso` varchar(50) DEFAULT NULL,
+  `id_cliente` int(11) NOT NULL,
+  `id_art` int(11) NOT NULL,
+  `id_profesional` int(11) NOT NULL,
+  `id_asistente` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `fch_creacion` datetime NOT NULL,
+  `fch_modificacion` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `fch_baja` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id_caso`),
+  KEY `CASO_ART` (`id_art`),
+  KEY `CASO_PROFESIONAL` (`id_profesional`),
+  KEY `CASO_ASISTENTE` (`id_asistente`),
+  KEY `CASO_USUARIO` (`id_usuario`),
+  KEY `CASO_CLIENTE` (`id_cliente`),
+  CONSTRAINT `CASO_CLIENTE` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`),
+  CONSTRAINT `CASO_ART` FOREIGN KEY (`id_art`) REFERENCES `art` (`id_art`),
+  CONSTRAINT `CASO_ASISTENTE` FOREIGN KEY (`id_asistente`) REFERENCES `asistente` (`id_asistente`),
+  CONSTRAINT `CASO_PROFESIONAL` FOREIGN KEY (`id_profesional`) REFERENCES `profesional` (`id_profesional`),
+  CONSTRAINT `CASO_USUARIO` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="cliente" view="colnames">
+<left>671</left>
+<top>21</top>
+<width>110</width>
+<height>186</height>
+<sql_create_table>CREATE TABLE `cliente` (
+  `id_cliente` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre_cliente` varchar(50) NOT NULL,
+  `apellido_cliente` varchar(50) NOT NULL,
+  `dni_cliente` int(8) NOT NULL,
+  `direccion_cliente` varchar(100) DEFAULT NULL,
+  `fecha_nacimiento` datetime DEFAULT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `fch_creacion` datetime NOT NULL,
+  `fch_modificacion` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `fch_baja` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id_cliente`),
+  KEY `CLIENTE_USUARIO` (`id_usuario`),
+  CONSTRAINT `CLIENTE_USUARIO` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="cobro" view="colnames">
+<left>390</left>
+<top>7</top>
+<width>106</width>
+<height>173</height>
+<sql_create_table>CREATE TABLE `cobro` (
+  `id_cobro` int(11) NOT NULL AUTO_INCREMENT,
+  `detalle_cobro` varchar(50) NOT NULL,
+  `fecha_cobro` datetime NOT NULL,
+  `monto_cobro` decimal(10,2) NOT NULL,
+  `id_caso` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `fch_creacion` datetime NOT NULL,
+  `fch_modificacion` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `fch_baja` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id_cobro`),
+  KEY `COBRO_CASO` (`id_caso`),
+  KEY `COBRO_USUARIO` (`id_usuario`),
+  CONSTRAINT `COBRO_USUARIO` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
+  CONSTRAINT `COBRO_CASO` FOREIGN KEY (`id_caso`) REFERENCES `caso` (`id_caso`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="expediente" view="colnames">
+<left>548</left>
+<top>374</top>
+<width>106</width>
+<height>173</height>
+<sql_create_table>CREATE TABLE `expediente` (
+  `id_expte` int(11) NOT NULL AUTO_INCREMENT,
+  `numero_expte` varchar(6) NOT NULL,
+  `ano_expte` int(4) NOT NULL,
+  `caratula_expte` varchar(100) NOT NULL,
+  `id_caso` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `fch_creacion` datetime NOT NULL,
+  `fch_modificacion` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `fch_baja` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id_expte`),
+  KEY `EXPEDIENTE_USUARIO` (`id_usuario`),
+  KEY `EXPEDIENTE_CASO` (`id_caso`),
+  CONSTRAINT `EXPEDIENTE_CASO` FOREIGN KEY (`id_caso`) REFERENCES `caso` (`id_caso`),
+  CONSTRAINT `EXPEDIENTE_USUARIO` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="llamada" view="colnames">
+<left>0</left>
+<top>182</top>
+<width>137</width>
+<height>199</height>
+<sql_create_table>CREATE TABLE `llamada` (
+  `id_llamada` int(11) NOT NULL AUTO_INCREMENT,
+  `detalle_llamada` varchar(200) NOT NULL,
+  `fecha_llamada` datetime NOT NULL,
+  `fechaProxima__llamada` datetime DEFAULT NULL,
+  `estado_llamada` varchar(1) DEFAULT NULL,
+  `tipo_llamada` varchar(1) DEFAULT NULL,
+  `id_caso` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `fch_creacion` datetime NOT NULL,
+  `fch_modificacion` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `fch_baja` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id_llamada`),
+  KEY `LLAMADA_CASO` (`id_caso`),
+  KEY `LLAMADA_USUARIO` (`id_usuario`),
+  CONSTRAINT `LLAMADA_USUARIO` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
+  CONSTRAINT `LLAMADA_CASO` FOREIGN KEY (`id_caso`) REFERENCES `caso` (`id_caso`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="pago" view="colnames">
+<left>522</left>
+<top>8</top>
+<width>106</width>
+<height>173</height>
+<sql_create_table>CREATE TABLE `pago` (
+  `id_pago` int(11) NOT NULL AUTO_INCREMENT,
+  `detalle_pago` int(11) NOT NULL,
+  `fecha_pago` datetime NOT NULL,
+  `monto_pago` decimal(10,2) NOT NULL,
+  `id_caso` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `fch_creacion` datetime NOT NULL,
+  `fch_modificacion` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `fch_baja` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id_pago`),
+  KEY `PAGO_CASO` (`id_caso`),
+  KEY `PAGO_USUARIO` (`id_usuario`),
+  CONSTRAINT `PAGO_USUARIO` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
+  CONSTRAINT `PAGO_CASO` FOREIGN KEY (`id_caso`) REFERENCES `caso` (`id_caso`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="profesional" view="colnames">
+<left>-2</left>
+<top>391</top>
+<width>127</width>
+<height>173</height>
+<sql_create_table>CREATE TABLE `profesional` (
+  `id_profesional` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre_profesional` varchar(50) NOT NULL,
+  `apellido_profesional` varchar(50) NOT NULL,
+  `titulo_profesional` varchar(50) NOT NULL,
+  `matricula_profesional` int(6) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `fch_creacion` datetime NOT NULL,
+  `fch_modificacion` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `fch_baja` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id_profesional`),
+  KEY `PROFESIONAL_USUARIO` (`id_usuario`),
+  CONSTRAINT `PROFESIONAL_USUARIO` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="telefono" view="colnames">
+<left>674</left>
+<top>233</top>
+<width>121</width>
+<height>173</height>
+<sql_create_table>CREATE TABLE `telefono` (
+  `id_telefono` int(11) NOT NULL AUTO_INCREMENT,
+  `numero_telefono` varchar(15) NOT NULL,
+  `propietario_telefono` varchar(20) DEFAULT NULL,
+  `detalle_telefono` varchar(200) DEFAULT NULL,
+  `id_cliente` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `fch_creacion` datetime NOT NULL,
+  `fch_modificacion` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `fch_baja` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id_telefono`),
+  KEY `TELEFONO_USUARIO` (`id_usuario`),
+  KEY `TELEFONO_CLIENTE` (`id_cliente`),
+  CONSTRAINT `TELEFONO_CLIENTE` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`),
+  CONSTRAINT `TELEFONO_USUARIO` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="usuario" view="colnames">
+<left>403</left>
+<top>234</top>
+<width>117</width>
+<height>173</height>
+<sql_create_table>CREATE TABLE `usuario` (
+  `id_usuario` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre_usuario` varchar(50) NOT NULL,
+  `apellido_usuario` varchar(50) NOT NULL,
+  `usuario_usuario` varchar(15) NOT NULL,
+  `clave_usuario` varchar(8) NOT NULL,
+  `tipoAcceso_usuario` int(1) NOT NULL,
+  `fch_creacion` datetime NOT NULL,
+  `fch_modificacion` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `fch_baja` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id_usuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>

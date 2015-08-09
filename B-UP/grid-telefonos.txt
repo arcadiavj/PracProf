@@ -1,0 +1,27 @@
+<div class="col-lg-3">
+	<input class="form-control" type="text" id="numero" name="numero" placeholder="N&uacute;mero">
+</div>
+<div class="col-lg-3">
+	<input class="form-control" type="text" id="propietario" name="propietario" placeholder="Propietario">
+</div>
+<div class="col-lg-6">
+	<input class="form-control" type="text" id="detalle" name="detalle" placeholder="Detalles">
+</div>
+<div class="col-lg-3">
+	<input class="form-control" type="text" id="numero2" name="numero2" placeholder="N&uacute;mero">
+</div>
+<div class="col-lg-3">
+	<input class="form-control" type="text" id="propietario2" name="propietario2" placeholder="Propietario">
+</div>
+<div class="col-lg-6">
+	<input class="form-control" type="text" id="detalle2" name="detalle2" placeholder="Detalles">
+</div>
+<div class="col-lg-3">
+	<input class="form-control" type="text" id="numero3" name="numero3" placeholder="N&uacute;mero">
+</div>
+<div class="col-lg-3">
+	<input class="form-control" type="text" id="propietario3" name="propietario3" placeholder="Propietario">
+</div>
+<div class="col-lg-6">
+	<input class="form-control" type="text" id="detalle3" name="detalle3" placeholder="Detalles">
+</div>
