@@ -43,14 +43,16 @@ class ControladorUsuario extends ControladorGeneral {
                 session_start();
                 session_destroy();
                 return $res=["falla"=>"user"];
-            }else if ((strcasecmp($resultado['pass'],sha1($pass)))==0) {
+            }else if ((strcasecmp($resultado['clave_usuario'],sha1($pass)))==0) {
                 session_start();
                 $_SESSION["user"]=$user;
-                return $res=["user"=>$user];
+                $_SESSION["id"]=$resultado['id_usuario'];
+                $_SESSION[""]=$resultado['tipoAcceso_usuario'];
+                return $res=["user"=>$user, "id"=>$resultado['id_usuario'],"acceso"=>$resultado['tipoAcceso_usuario']];
             }else{
                 session_start();
                 session_destroy();
-                return $res=["falla"=>"pass", "pass"=>  sha1($pass), "passbd"=>$resultado['pass']];
+                return $res=["falla"=>"pass", "pass"=>  sha1($pass), "passbd"=>$resultado['clave_usuario']];
             }
         }catch (PDOException $excepcionPDO) {
             echo "<br>Error PDO: ".$excepcionPDO->getTraceAsString().'<br>';

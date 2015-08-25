@@ -224,7 +224,6 @@ $(function() {
 //        };
 //        
 //        app.buscarClientes = function() {
-//
 //            var url = "../../controlador/ruteador/Ruteador.php?accion=buscar&nombreFormulario=Cliente";
 //
 //            $.ajax({
@@ -303,7 +302,7 @@ $(function() {
 //                "language":{ //cambia el lenguaje de la dataTable
 //                    "url":"../js/dataTable-es.json" //este es el archivo json del lenguaje español
 //                }
-//            });
+//          });
 //        };
         app.init();
     })(TallerAvanzada);
