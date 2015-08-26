@@ -17,16 +17,46 @@ class ControladorUsuario extends ControladorGeneral {
         
     }
 
-    public function buscar() {
-        $statement = $this->refControladorPersistencia->ejecutarSentencia(DBSentencias::BUSCAR_USUARIOS);
-
-        $arrayUsuarios = $statement->fetchAll(PDO::FETCH_ASSOC);
-        
-        return $arrayUsuarios;
+    public function buscar() {//funcion utilizada para buscar en la base de datos a todos los asistentes para proceder con
+    //    su listado
+        try {
+           $this->refControladorPersistencia->get_conexion()->beginTransaction();  //comienza la transacción
+           $statement = $this->refControladorPersistencia->ejecutarSentencia(DBSentencias::BUSCAR_USUARIOS);//paso los datos correspondientes a la función ejecutar sentencia
+           //para buscar a los asistentes
+           $arrayUsuario = $statement->fetchAll(PDO::FETCH_ASSOC);//retorna un array asociativo para no duplicar datos
+           
+           $this->refControladorPersistencia->get_conexion()->commit();//si todo salió bien hace el commit
+           
+            return $arrayUsuario;//regreso el array para poder 
+        }catch (PDOException $excepcionPDO) {
+            echo "<br>Error PDO: ".$excepcionPDO->getTraceAsString().'<br>';
+            $this->refControladorPersistencia->get_conexion()->rollBack();//si salio mal hace un rollback
+        }catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+            $this->refControladorPersistencia->get_conexion()->rollBack();//si salio mal hace un rollback
+        }
     }
 
     public function eliminar($datosCampos) {
-        
+         try {
+            $fecha = time();//coloca la fecha actual           
+            $fechaFormato=date('Y-m-d H:i:s');//formateo la fecha para guardar en la bd
+            
+            $this->refControladorPersistencia->get_conexion()->beginTransaction();//comienzo la transacción
+            
+            $paramUsuario=["fch_baja"=>$fechaFormato, "id_usuario"=>$id];//uso los datos obtenidos para buscar en la bd de datos todos los datos el ususrio
+            
+            $usuarioConsulta = $this->refControladorPersistencia->ejecutarSentencia(DBSentencias::ELIMINAR_USUARIO,$paramUsuario);//Envio los datos a la base de datos para eliminar el usuario          
+            $this->refControladorPersistencia->get_conexion()->commit();//ejecuto la acción para eliminar de forma lógica a los ususario
+            
+            
+        }catch (PDOException $excepcionPDO) {            
+            echo "<br>Error PDO: ".$excepcionPDO->getTraceAsString().'<br>';
+            $this->refControladorPersistencia->get_conexion()->rollBack();//si salio mal hace un rollback
+        } catch (Exception $exc) {           
+                echo $exc->getTraceAsString();
+                $this->refControladorPersistencia->get_conexion()->rollBack();  //si hay algún error hace rollback
+        }
     }
 
     public function modificar($datosCampos) {
