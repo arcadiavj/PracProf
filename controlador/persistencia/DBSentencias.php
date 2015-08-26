@@ -31,6 +31,8 @@ interface DBSentencias {
 //USUARIOS
 
     const CHECK_USER = "SELECT * FROM usuario WHERE usuario_usuario = ?";
+    const BUSCAR_USUARIOS="SELECT usuario.id_usuario,usuario.nombre_usuario, usuario.apellido_usuario, usuario.fch_creacion, usuario.fch_modificacion, usuario.nombre_usuario, usuario.apellido_usuario FROM usuario";
+    const ELIMINAR_ASISTENTE="UPDATE usuario SET fch_baja = ? WHERE id_usuario=?";
     
 //    const INSERTAR_PERSONA = "INSERT INTO persona(nombre, apellido, titulo, legajo, tipo, FK_domicilio) VALUES(?,?,?,?,?,?)";
 //    
