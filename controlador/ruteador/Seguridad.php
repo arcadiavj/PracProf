@@ -6,6 +6,8 @@ if (isset($_POST['pass'])) {
     $clave = $_POST['pass'];
 }
 require_once '../controladoresEspecificos/ControladorUsuario.php';
+//$usuario= $_GET['user'];
+//$clave=$_GET['pass'];
 $cU = new ControladorUsuario();
 $us = base64_decode(base64_decode($usuario));
 $pa = base64_decode(base64_decode($clave));

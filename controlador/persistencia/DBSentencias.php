@@ -10,9 +10,28 @@
  *
  * @author Flaco
  */
-interface DBSentencias {
+interface DBSentencias {    
     const BUSCAR_CLIENTES = "SELECT * FROM cliente WHERE fch_baja = '0000-00-00 00:00:00'";
     const BUSCAR_ARTS = "SELECT * FROM art WHERE fch_baja = '0000-00-00 00:00:00'";
+    
+    
+    
+// ASISTENTES
+    const BUSCAR_ASISTENTES="SELECT asistente.id_asistente,asistente.nombre_asistente, asistente.apellido_asistente, asistente.fch_creacion, asistente.fch_modificacion, usuario.nombre_usuario, usuario.apellido_usuario 
+                                FROM asistente 
+                                INNER JOIN usuario  ON asistente.id_usuario=usuario.id_usuario 
+                                WHERE asistente.fch_baja= '0000-00-00 00:00:00'";
+    const ELIMINAR_ASISTENTE="UPDATE asistente SET fch_baja = ? WHERE id_asistente=?";
+    const INSERTAR_ASISTENTE="INSERT INTO asistente(nombre_asistente,apellido_asistente,id_usuario,fch_creacion,fch_modificacion,fch_baja) VALUES (?,?,?,?,?,?)";
+    const BUSCAR_ULTIMO_ASISTENTE="SELECT MAX(id_asistente) FROM asistente";
+    const BUSCAR_ASISTENTES_ID="SELECT id_asistente,nombre_asistente,apellido_asistente,id_usuario,fch_creacion,fch_modificacion FROM asistente WHERE id_asistente=?";
+    const MODIFICAR_ASISTENTE="UPDATE asistente SET nombre_asistente=?, apellido_asistente=?, id_usuario=?,fch_creacion=?, fch_modificacion=?,fch_baja=? WHERE id_asistente=?";
+    
+    
+//USUARIOS
+
+    const CHECK_USER = "SELECT * FROM usuario WHERE usuario_usuario = ?";
+    
 //    const INSERTAR_PERSONA = "INSERT INTO persona(nombre, apellido, titulo, legajo, tipo, FK_domicilio) VALUES(?,?,?,?,?,?)";
 //    
 //    const ELIMINAR_PERSONA = "DELETE FROM persona WHERE id = ?";
@@ -49,7 +68,7 @@ interface DBSentencias {
 //    const BUSCAR_UN_DOMICILIO = "SELECT * FROM domicilio WHERE id = ?";
 //    const ULTIMO_DOMICILIO = "SELECT MAX(id) FROM domicilio";
 //    
-//    const CHECK_USER = "SELECT * FROM usuario WHERE user = ?";
+   
 //    const BUSCAR_USUARIOS = "SELECT * FROM usuario";
 //    const INSERTAR_USUARIO = "INSERT INTO usuario(user, pass) VALUES(?,?)";
 //    const ELIMINAR_USUARIO = "DELETE FROM usuario WHERE id = ?";

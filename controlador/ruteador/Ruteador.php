@@ -38,6 +38,11 @@ switch ($accion) {
         $resultado = $objControlador->$accion($datosCampos); //llamo a la acción
         echo json_encode($resultado);//arreglo json
         break;
+    case "modificar":
+        //$datosCampos = ["id"=>$_GET['id'], "nAsistente"=>$_GET['nAsistente'],"aAsistente"=>$_GET['aAsistente'], "fchCreacion"=>$_GET['fchCreacion'],"fchModificacion"=>$_GET['fchModificacion'] ];
+        $resultado = $objControlador->$accion($datosCampos); //llamo a la acción
+        echo json_encode($resultado);//arreglo json
+        break;
     case "buscarX":
         $datos = ["criterio"=>$criterio, "valor"=>$valor];
         $resultado = $objControlador->$accion($datos); //llamo a la acción
