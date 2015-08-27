@@ -13,7 +13,19 @@ require_once 'ControladorGeneral.php';
  */
 class ControladorProfesional extends ControladorGeneral{
     public function buscar() {
-        
+        try {
+            $this->refControladorPersistencia->get_conexion()->beginTransaction();  //comienza la transacción
+            $statement = $this->refControladorPersistencia->ejecutarSentencia(DBSentencias::BUSCAR_PROFESIONALES);
+            $arrayAsistentes = $statement->fetchAll(PDO::FETCH_ASSOC);
+            $this->refControladorPersistencia->get_conexion()->commit(); //si todo salió bien hace el commit
+            return $arrayAsistentes;
+        }catch (PDOException $excepcionPDO) {
+            echo "<br>Error PDO: ".$excepcionPDO->getTraceAsString().'<br>';
+            $this->refControladorPersistencia->get_conexion()->rollBack();//si salio mal hace un rollback
+        }catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+            $this->refControladorPersistencia->get_conexion()->rollBack();//si salio mal hace un rollback
+        }
     }
 
     public function eliminar($id) {

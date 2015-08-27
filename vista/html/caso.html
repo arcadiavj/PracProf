@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <title>PRACTICA PROFESIONAL</title>
+        <link href="../css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
         <!-- Bootstrap -->
         <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
@@ -84,7 +85,12 @@
             </div><!-- /.container-fluid -->
         </nav>
         <div><h1>CASOS</h1></div>
-        <!-- modal alumno-->
+        <div class="form-group">
+            <input class="form-control" type="hidden" id="id_user" name="id_user">
+        </div>
+        
+        
+        <!-- modal caso-->
         <div class="modal fade" id="modalCaso" tabindex="-1" role="dialog" aria-labelledby="modalCaso" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -102,51 +108,101 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <input class="form-control" type="hidden" id="id" name="id">
+                                <input class="form-control" type="hidden" id="id_caso" name="id_caso">
                             </div>
                             <div class="form-group">
-                                <label class='col-lg-3'>ART</label>
-                                <div class='col-lg-9'>
-                                    <div class="dropdown">
-                                        <button class="btn btn-default dropdown-toggle" type="button" id="comboArts" data-toggle="dropdown" aria-haspopup="true">
-                                          ART
-                                          <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="comboArt" id="comboArt">
-                                          
-                                        </ul>
-                                        <label class="item selected" id="artNombre"></label>
-                                    </div>
+                                <label class="col-lg-3">ART</label>
+                                <div class="col-lg-6">
+                                    <select class="form-control" id="comboArt">
+                                        
+                                    </select>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label class="right">In Itinere</label>
+                                </div>
+                                <div class="col-lg-1">
+                                    <input class="checkbox left" type="checkbox" id="inItinere" name="inItinere">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class='col-lg-3'>Cliente</label>
-                                <div class='col-lg-9'>
-                                    <div class="dropdown">
-                                        <button class="btn btn-default dropdown-toggle" type="button" id="comboClientes" data-toggle="dropdown" aria-haspopup="true">
-                                          CLIENTE
-                                          <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="comboClientes" id="comboCliente">
-                                          
-                                        </ul>
-                                    </div>
+                                <label class="col-lg-3">Asistente</label>
+                                <div class="col-lg-6">
+                                    <select class="form-control" id="comboAsistente">
+                                        
+                                    </select>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3">Fecha Accidente:</label>
                                 <div class="col-lg-3">
-                                    <select class="form-control" id="anoNac">
+                                    
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3">Profesional</label>
+                                <div class="col-lg-6">
+                                    <select class="form-control" id="comboProfesional">
+                                        
+                                    </select>
+                                </div>
+                                <div class="col-lg-3">
+                                    
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class='col-lg-3'>ID Cliente</label>
+                                <div class='col-lg-5'>
+                                        <input class="form-control" type="text" id="nombreCliente" name="nombreCliente"
+                                               placeholder="Nombre Cliente"
+                                                   data-bv-notempty="true"
+                                                   data-bv-notempty-message="Debes completar el Salario"
+                                                   data-bv-stringlength="true"
+                                                   data-bv-stringlength-min="1"
+                                                   data-bv-stringlength-max="50" disabled="disabled">
+                                </div>
+                                <div class='col-lg-3'>
+                                    <button type="button" id="selecCliente" name="selecCliente" class="btn btn-primary" value="">Seleccionar Cliente</button>
+                                </div>
+                                <div class='col-lg-1'>
+                                    <input class="form-control" type="hidden" id="idCliente" name="idCliente"
+                                                   data-bv-notempty="true"
+                                                   data-bv-notempty-message="Debes completar el Salario"
+                                                   data-bv-stringlength="true"
+                                                   data-bv-stringlength-min="1"
+                                                   data-bv-stringlength-max="11" disabled="disabled">
+                                </div>
+                            </div>
+                            <!-- DATATABLE CLIENTES PARA MODAL-->
+                            <div class="form-group" id="divTablaClientes">
+                                <br><br>
+                            <table id="tablaClientes" class="display" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>SELECCIONAR</th>
+                                        <th>APELLIDO</th>
+                                        <th>NOMBRE</th>
+                                        <th>DNI</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cuerpoTablaClientes">
+
+                                </tbody>
+                            </table>
+                                <br><br>
+                            </div>
+                            <!--FIN DATATABLE CLIENTES PARA MODAL -->
+                            
+                            <div class="form-group">
+                                <label class="col-lg-3">Fecha Accidente</label>
+                                <div class="col-lg-3">
+                                    <select class="form-control" id="anoAcc">
                                         <option value="0">Año</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
-                                    <select class="form-control" id="mesNac">
+                                    <select class="form-control" id="mesAcc">
                                         <option value="0">Mes</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
-                                    <select class="form-control" id="diaNac">
+                                    <select class="form-control" id="diaAcc">
                                         <option value="0">D&iacute;a</option>
                                     </select>
                                 </div>
@@ -196,7 +252,7 @@
                                                    data-bv-notempty="true"
                                                    data-bv-notempty-message="Debes completar la Etapa"
                                                    data-bv-stringlength="true"
-                                                   data-bv-stringlength-min="1"
+                                                   data-bv-stringlength-min="0"
                                                    data-bv-stringlength-max="50"
                                                    data-bv-stringlength-message="Hasta 50 caracteres.">
                                 </div>
@@ -204,13 +260,13 @@
                             <div class="form-group">
                                 <label class='col-lg-3'>Descripci&oacute;n</label>
                                 <div class='col-lg-9'>
-                                        <input class="form-control" type="text" id="descripcion" name="descripcion"
+                                    <textarea class="form-control" id="descripcion" name="descripcion"
                                                    data-bv-notempty="true"
                                                    data-bv-notempty-message="Debes completar el Descripci&oacute;n"
                                                    data-bv-stringlength="true"
                                                    data-bv-stringlength-min="1"
-                                                   data-bv-stringlength-max="50"
-                                                   data-bv-stringlength-message="Hasta 50 caracteres.">
+                                                   data-bv-stringlength-max="300"
+                                                   data-bv-stringlength-message="Hasta 300 caracteres."></textarea>
                                 </div>
                             </div>
                                 
@@ -272,8 +328,8 @@
             <div class="col-lg-4"></div><!-- Cierra el navbar que tiene el buscar y las opciones agregar imprimir -->
         </div>  <!-- fin modal --> 
         <div class="row">
-            <div class="col-lg-2"></div>
-            <div class="col-lg-8">
+            <!--<div class="col-lg-1"></div>-->
+            <div class="col-lg-12">
                <!-- DATATABLE-->
                 <table id="tablaCasos" class="display" cellspacing="0" width="100%">
                     <thead>
@@ -281,29 +337,23 @@
                             <th>VER</th>
                             <th>APELLIDO</th>
                             <th>NOMBRE</th>
-                            <th>DIRECCION</th>
+                            <th>DNI</th>
                             <th>ART</th>
                             <th>ASISTENTE</th>
+                            <th>FECHA ACCIDENTE</th>
+                            <th>IN ITINERE</th>
+                            <th>FIRMA PODER</th>
+                            <th>DESCRIPCION</th>
+                            <th>PROFESIONAL</th>
                             <th>OPCIONES</th>
                         </tr>
                     </thead>
                     <tbody id="cuerpoTablaCasos">
 
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>VER</th>
-                            <th>APELLIDO</th>
-                            <th>NOMBRE</th>
-                            <th>DIRECCION</th>
-                            <th>ART</th>
-                            <th>ASISTENTE</th>
-                            <th>OPCIONES</th>
-                        </tr>
-                    </tfoot>
                 </table>
             </div>
-            <div class="col-lg-2"></div>
+            <!--<div class="col-lg-1"></div>-->
         </div>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="../js/jquery/jquery-1.11.1.min.js" type="text/javascript"></script>
