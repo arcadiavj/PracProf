@@ -84,11 +84,13 @@
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
-        <div><h2>CLIENTES</h2></div>
-        
-        
-        
-        
+        <div><h2>CLIENTES</h2>
+            <!--CAMPO OCULTO PARA EL ID_USER DE LA SESSION DE PHP -->
+            <div class="form-group">
+                <input class="form-control" type="hidden" id="id_user" name="id_user">
+            </div>
+            <!--fin campo oculto-->
+        </div>
         <!-- modal alumno-->
         <div class="modal fade" id="modalCliente" tabindex="-1" role="dialog" aria-labelledby="modalAlumno" aria-hidden="true">
             <div class="modal-dialog">
@@ -106,8 +108,9 @@
                             <h4 class="modal-title" id="tituloModal">Nuevo Cliente</h4>
                         </div>
                         <div class="modal-body">
+                            
                             <div class="form-group">
-                                <input class="form-control" type="hidden" id="id" name="id">
+                                <input class="form-control" type="hidden" id="id_cliente" name="id_cliente">
                             </div>
                             <div class="form-group">
                                 <label class='col-lg-3'>Apellido</label>
@@ -155,21 +158,24 @@
                                     <select class="form-control" id="anoNac">
                                         <option value="0">Año</option>
                                     </select>
+                                    <input class="form-control" type="hidden" id="AnoNac" name="AnoNac">
                                 </div>
                                 <div class="col-lg-3">
                                     <select class="form-control" id="mesNac">
                                         <option value="0">Mes</option>
                                     </select>
+                                    <input class="form-control" type="hidden" id="MesNac" name="MesNac">
                                 </div>
                                 <div class="col-lg-3">
                                     <select class="form-control" id="diaNac">
                                         <option value="0">D&iacute;a</option>
                                     </select>
+                                     <input class="form-control" type="hidden" id="DiaNac" name="DiaNac">
                                 </div>
                             </div>
                             <div class="divider">
                                 <hr>
-                                <label class='col-lg-12 text-center'>Agregar Tel&eacute;fonos</label><br><br>
+                                <label class='col-lg-12 text-center' id="tituloTelefonos">Tel&eacute;fonos</label><br><br>
                             </div>
                             <div class="form-group row" id="gridTelefonos"><!-- Simulación de grid teléfonos-->
                                 
@@ -192,7 +198,7 @@
                             <div class="form-group">
                                 <label class='col-lg-2'></label>
                                 <div class='col-lg-10'>
-                                    <input class="form-control" type="hidden" id="contTelefonos" name="contTelefonos" value="4">
+                                    <input class="form-control" type="hidden" id="contTelefonos" name="contTelefonos" value="2">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -211,11 +217,6 @@
                 </div>
             </div>
         </div>
-        
-        
-        
-        
-        
         
         <!-- Button trigger modal -->
         <div class="row">
@@ -249,26 +250,15 @@
                             <th>VER</th>
                             <th>APELLIDO</th>
                             <th>NOMBRE</th>
+                            <th>DNI</th>
                             <th>DIRECCION</th>
-                            <th>ART</th>
-                            <th>ASISTENTE</th>
+                            <th>FECHA NACIMIENTO</th>
                             <th>OPCIONES</th>
                         </tr>
                     </thead>
                     <tbody id="cuerpoTablaClientes">
 
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>VER</th>
-                            <th>APELLIDO</th>
-                            <th>NOMBRE</th>
-                            <th>DIRECCION</th>
-                            <th>ART</th>
-                            <th>ASISTENTE</th>
-                            <th>OPCIONES</th>
-                        </tr>
-                    </tfoot>
                 </table>
             </div>
             <div class="col-lg-2"></div>
